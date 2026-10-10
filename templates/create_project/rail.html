@@ -1,0 +1,9 @@
+<div class="brand">
+  {{ icon("pin") }}
+  <span>Create project</span>
+</div>
+<nav class="route">
+  {% for step in steps %}
+  <a href="#{{ step.id }}" class="stop{{ ' active' if loop.first }}" data-target="{{ step.id }}"><span class="dot">{{ step.num }}</span><span class="stop-label">{{ step.label }}</span></a>
+  {% endfor %}
+</nav>

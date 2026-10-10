@@ -1,0 +1,95 @@
+/* Shared design tokens + Streamlit overrides used by every page.
+   Tokens and component styles are taken from the provided HTML designs. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+:root {
+  --ink: #11201C;
+  --paper: #F1F4F0;
+  --panel: #0E2B24;
+  --route: #33D2A0;
+  --accent: #1F6F58;
+  --accent-dark: #175245;
+  --accent-soft: #E1F0E9;
+  --text-secondary: #57685F;
+  --text-muted: #8B9A92;
+  --border: #DCE4DD;
+  --border-strong: #C3CFC5;
+  --danger: #B3261E;
+  --radius: 8px;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* ---- Streamlit chrome ---- */
+[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"],
+[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] { display: none !important; }
+.stApp { background: var(--paper); color: var(--ink); font-family: var(--font-body); }
+[data-testid="stMainBlockContainer"] { max-width: 1080px; padding: 48px 24px 96px; }
+.svg-icon { display: block; flex-shrink: 0; width: 16px; height: 16px; background-color: currentColor; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---- two-column layout: 250px rail + 700px content ---- */
+.st-key-layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] {
+  gap: 40px; align-items: flex-start; flex-wrap: nowrap;
+}
+.st-key-layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:first-child {
+  flex: 0 0 250px !important; width: 250px !important; min-width: 0;
+  position: sticky; top: 40px; align-self: flex-start;
+}
+.st-key-layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:last-child {
+  flex: 1 1 0 !important; width: auto !important; max-width: 700px; min-width: 0;
+}
+
+@media (max-width: 860px) {
+  .st-key-layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] { flex-direction: column; }
+  .st-key-layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:first-child,
+  .st-key-layout > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:last-child {
+    flex: 1 1 auto !important; width: 100% !important; max-width: none; position: static;
+  }
+}
+
+/* Main column: spacing comes from the page's own margins, not Streamlit's gap. */
+.st-key-main { gap: 0; }
+
+/* ---- sidebar rail ---- */
+.st-key-rail { background: var(--panel); border-radius: 16px; padding: 26px 22px; gap: 0; }
+.brand { display: flex; align-items: center; gap: 10px; color: #fff; padding-bottom: 20px; margin-bottom: 22px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.brand .svg-icon { color: var(--route); width: 20px; height: 20px; flex-shrink: 0; }
+.brand > span { font-family: var(--font-display); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+
+/* ---- buttons (.btn-secondary / .btn-primary from the design) ---- */
+.stApp [data-testid="stBaseButton-secondary"],
+.stApp [data-testid="stBaseButton-primary"] {
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  padding: 11px 22px; min-height: 0; border-radius: 999px; gap: 8px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.stApp [data-testid="stBaseButton-secondary"] { background: #fff; border: 1px solid var(--border); color: var(--ink); }
+.stApp [data-testid="stBaseButton-secondary"]:hover { border-color: var(--border-strong); color: var(--ink); background: #fff; }
+.stApp [data-testid="stBaseButton-secondary"]:focus:not(:active) { border-color: var(--border-strong); color: var(--ink); }
+.stApp [data-testid="stBaseButton-primary"] { background: var(--accent); border: 1px solid var(--accent); color: #fff; }
+.stApp [data-testid="stBaseButton-primary"]:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+.stApp [data-testid="stBaseButton-secondary"] p,
+.stApp [data-testid="stBaseButton-primary"] p { font-size: inherit; font-weight: inherit; }
+
+/* ---- form fields ---- */
+[data-testid="stWidgetLabel"] p { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+[data-testid="stWidgetLabel"] { margin-bottom: 0; min-height: 0; padding-bottom: 6px; }
+[data-testid="stTextInputRootElement"], [data-testid="stNumberInputContainer"],
+[data-testid="stTextAreaRootElement"], [data-testid="stDateInputField"],
+.stSelectbox > div:last-child > div:first-child {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+[data-testid="stTextInputRootElement"]:focus-within, [data-testid="stNumberInputContainer"]:focus-within,
+[data-testid="stTextAreaRootElement"]:focus-within, [data-testid="stDateInputField"]:focus-within,
+.stSelectbox > div:last-child > div:first-child:focus-within {
+  border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.stApp input, .stApp textarea { font-family: var(--font-body); font-size: 14px; color: var(--ink); }
+.stApp input::placeholder, .stApp textarea::placeholder { color: var(--text-muted); opacity: 1; }
+.stApp textarea { min-height: 76px; }
+[data-testid="InputInstructions"],
+[data-testid="stNumberInputStepUp"], [data-testid="stNumberInputStepDown"] { display: none !important; }
+.field-hint { font-size: 12px; color: var(--text-muted); margin-top: -14px; }

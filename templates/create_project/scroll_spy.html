@@ -1,0 +1,41 @@
+<script>
+// Highlights the rail stop for the section in view, and smooth-scrolls on click.
+(function () {
+  var win = window.parent, doc = win.document;
+  if (win.__cpScrollSpyCleanup) win.__cpScrollSpyCleanup();
+
+  function update() {
+    var stops = doc.querySelectorAll('.route .stop');
+    if (!stops.length) return;
+    var ids = Array.prototype.map.call(stops, function (s) { return s.getAttribute('data-target'); });
+    var threshold = win.innerHeight * 0.3, current = 0;
+    ids.forEach(function (id, i) {
+      var el = doc.getElementById(id);
+      if (el && el.getBoundingClientRect().top < threshold) current = i;
+    });
+    stops.forEach(function (s, i) {
+      s.classList.toggle('active', i === current);
+      s.classList.toggle('done', i < current);
+    });
+  }
+  function onClick(e) {
+    var stop = e.target.closest && e.target.closest('.route .stop');
+    if (!stop) return;
+    var el = doc.getElementById(stop.getAttribute('data-target'));
+    if (!el) return;
+    e.preventDefault();
+    var smooth = !win.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+  }
+
+  doc.addEventListener('scroll', update, true);
+  doc.addEventListener('click', onClick, true);
+  var timer = setInterval(update, 500);
+  win.__cpScrollSpyCleanup = function () {
+    doc.removeEventListener('scroll', update, true);
+    doc.removeEventListener('click', onClick, true);
+    clearInterval(timer);
+  };
+  update();
+})();
+</script>

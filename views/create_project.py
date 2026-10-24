@@ -11,6 +11,7 @@ import streamlit as st
 from components.employees import import_employees
 from components.html import render_string, render_template
 from components.ui import icon_rule, inject_css, load_css
+from components.uploads import BRD_UPLOAD_HINT, validate_brd
 from services import DataProviderError
 from services import projects
 
@@ -37,6 +38,7 @@ def _init_state() -> None:
     ss.setdefault("cp_imported_employees", {})
     ss.setdefault("cp_employee_import_digest", None)
     ss.setdefault("cp_project_id", None)  # set once saved, so later saves update it
+    ss.setdefault("cp_generation_preview", None)
     ##ss.setdefault("cp_sprint_length", "2 weeks")
     ss.setdefault("cp_working_days", 5)
     ss.setdefault("cp_hours_day", 6)
@@ -142,7 +144,12 @@ employee_directory = {
 }
 employee_directory.update(st.session_state.cp_imported_employees)
 st.session_state.cp_employee_directory = employee_directory
-load_css("theme.css", "create_project.css")
+load_css("theme.css", "create_project.css", "generation.css")
+generation_screen = st.empty()
+if st.session_state.cp_generation_preview is not None:
+    generation_screen.html(render_string(
+        "create_project/generation.html", **st.session_state.cp_generation_preview,
+    ))
 
 mode = st.session_state.cp_mode
 upload = st.session_state.get("cp_brd")
@@ -210,7 +217,12 @@ with content_scroll:
         st.text_area("Expected deliverables", key="cp_deliverables",
                      placeholder="Live vehicle map, geofence alerts, driver scorecards")
         st.html('<div class="field-hint">One per line — each becomes a candidate epic.</div>')
-        st.file_uploader("BRD document", key="cp_brd")
+        with st.container(key="brd_upload"):
+            brd_upload = st.file_uploader("BRD document", key="cp_brd", help=BRD_UPLOAD_HINT)
+            brd_error = validate_brd(brd_upload.name, brd_upload.getvalue()) if brd_upload is not None else None
+            if brd_error:
+                st.error(brd_error)
+            st.caption(BRD_UPLOAD_HINT)
 
     # 03 Team members
     with st.container(key="block_team"):
@@ -298,12 +310,15 @@ with content_scroll:
 with action_footer:
     # Actions
     with st.container(key="actions", horizontal=True):
-        save_clicked = st.button("Save as draft", key="save_draft")
-        generate_clicked = st.button("Generate sprints", key="generate", type="primary")
+        save_clicked = st.button("Save as draft", key="save_draft", disabled=bool(brd_error))
+        generate_clicked = st.button("Generate sprints", key="generate", type="primary",
+                                     disabled=bool(brd_error))
 
         if save_clicked or generate_clicked:
             payload = build_payload()
             errors = validate(payload)
+            if brd_error:
+                errors.append(brd_error)
             if errors:
                 st.error(" ".join(errors))
             else:
@@ -312,12 +327,24 @@ with action_footer:
                         _save(payload)
                         st.toast("Draft saved")
                     else:
-                        with st.spinner("Generating sprints, tasks and test cases..."):
-                            project_id = _save(payload)
-                            projects.generate_documents(project_id)
-                        st.switch_page(GENERATED_DOCS_PAGE, query_params={"project_id": project_id})
+                        generation_screen.html(render_string(
+                            "create_project/generation.html", generating=False, has_brd=brd_upload is not None,
+                        ))
+                        project_id = _save(payload)
+                        generation_screen.html(render_string(
+                            "create_project/generation.html", generating=True, has_brd=brd_upload is not None,
+                        ))
+                        projects.generate_documents(project_id)
+                        st.session_state.cp_generation_preview = {
+                            "generating": True, "has_brd": brd_upload is not None,
+                        }
+                        # Temporarily keep the generation screen instead of opening documents.
+                        # generation_screen.empty()
+                        # st.switch_page(GENERATED_DOCS_PAGE, query_params={"project_id": project_id})
                 except DataProviderError as exc:
-                    st.error(f"Could not save the project: {exc}")
+                    generation_screen.empty()
+                    action = "save the project" if save_clicked else "generate the sprint plan"
+                    st.error(f"Could not {action}: {exc}")
 
 with st.container(key="scroll_spy"):
     st.iframe(render_string("create_project/scroll_spy.html"), height=1)

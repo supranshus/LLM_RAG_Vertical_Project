@@ -6,11 +6,26 @@ A Streamlit version of the provided HTML pages:
 2. **Generated documents** (`views/generated_documents.py`, from `generated-documents.html`): problem statement,
    project description, sprint plan, task breakdown and test cases.
 
-**Generate sprints** saves the project, runs generation, and opens page 2 (`?project_id=...`).
+**Generate sprints** saves the project and runs generation, then stays on the
+full-page generation preview. The redirect to generated documents is temporarily
+commented out. The status card uses the existing green theme to show project
+collection, BRD availability, and the task/sprint/document workflow, and remains
+visible on reruns without repeating generation. The current API returns all
+generation stages together; the preview does not simulate per-stage completion.
+If saving or generation fails, the form returns with an error so you can retry.
 **Back to project setup** returns to the form with its values kept. **Export all** downloads the documents as a zip of
 Markdown files.
 
 It runs on mock data for now. Switching to the real backend is a config change.
+
+## BRD Upload
+
+The optional BRD upload accepts PDF, DOCX, and UTF-8 TXT documents up to 50 MB.
+Empty files, unsupported extensions, and files that fail basic format checks
+(PDF header, DOCX package entries, or UTF-8 text) show an error directly below
+the uploader. Saving a draft and generating sprints are blocked until the
+invalid file is removed or replaced. These checks are not a full document
+parser or malware scanner.
 
 ## Employee Excel Import
 

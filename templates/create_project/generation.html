@@ -1,0 +1,47 @@
+<section class="generation-screen" aria-labelledby="generation-title" aria-busy="true">
+  <div class="generation-card" role="status" aria-live="polite">
+    <header class="generation-header">
+      <div class="generation-heading">
+        <span class="generation-brand-icon" aria-hidden="true">{{ icon("pin") }}</span>
+        <h1 id="generation-title">Generating your sprint plan</h1>
+      </div>
+      <span class="generation-badge">In progress</span>
+    </header>
+    <p class="generation-intro">Your project is being analyzed. Please keep this page open until generation finishes.</p>
+    <ol class="generation-steps">
+      <li class="generation-step {{ 'complete' if generating else 'active' }}">
+        <span class="generation-marker" aria-hidden="true">{% if generating %}{{ icon("check") }}{% endif %}</span>
+        <div>
+          <h2>Project details {{ 'collected' if generating else 'being collected' }}</h2>
+          <p>{{ 'Deliverables and team skills loaded.' if generating else 'Saving your project details and attachments...' }}</p>
+          <span class="generation-sr-only">{{ 'Complete' if generating else 'In progress' }}</span>
+        </div>
+      </li>
+      <li class="generation-step {{ 'complete' if generating and has_brd else 'pending' }}">
+        <span class="generation-marker" aria-hidden="true">{% if generating and has_brd %}{{ icon("check") }}{% endif %}</span>
+        <div>
+          <h2>{{ 'BRD ready for analysis' if has_brd else 'No BRD attached' }}</h2>
+          <p>{{ 'Requirements and project scope will be analyzed during generation.' if has_brd else 'Using your project description and deliverables.' }}</p>
+          <span class="generation-sr-only">{{ ('Complete' if generating else 'Waiting') if has_brd else 'Optional step skipped' }}</span>
+        </div>
+      </li>
+      <li class="generation-step {{ 'active' if generating else 'pending' }}">
+        <span class="generation-marker" aria-hidden="true"></span>
+        <div>
+          <h2>Creating tasks and subtasks</h2>
+          <p>{{ 'Identifying work items and required skills...' if generating else 'Coming up next' }}</p>
+          <span class="generation-sr-only">{{ 'In progress' if generating else 'Waiting' }}</span>
+        </div>
+      </li>
+      <li class="generation-step pending">
+        <span class="generation-marker" aria-hidden="true"></span>
+        <div><h2>Allocating work to sprints</h2><p>Coming up next</p><span class="generation-sr-only">Waiting</span></div>
+      </li>
+      <li class="generation-step pending">
+        <span class="generation-marker" aria-hidden="true"></span>
+        <div><h2>Preparing your documents</h2><p>Sprint plan, task breakdown, and test cases.</p><span class="generation-sr-only">Waiting</span></div>
+      </li>
+    </ol>
+    <p class="generation-note">Generation preview. The generated documents screen is temporarily disabled.</p>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+{# One alert. Its action buttons are rendered by the view underneath. #}
+<div class="ntf-head">
+  <span class="badge badge-{{ item.severity }}">{{ item.severity|capitalize }}</span>
+  <span class="ntf-title">{{ item.title }}</span>
+  <span class="ntf-when">{{ when }}</span>
+</div>
+<p class="ntf-text">{{ item.message_text }}</p>
+<div class="ntf-foot">
+  <span class="tag tag-{{ category_tag }}">{{ category_label }}</span>
+  <span class="ntf-meta">{{ item.project_name }} · {{ entity_label }}</span>
+  {% if item.actor_name %}<span class="ntf-meta">from {{ item.actor_name }}</span>{% endif %}
+  {% if item.ai_metadata %}<span class="ntf-meta is-model">drafted by {{ item.ai_metadata.model_name }}</span>{% endif %}
+  <span class="badge badge-{{ lifecycle_badge }}">{{ lifecycle_label }}</span>
+</div>

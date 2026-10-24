@@ -1,0 +1,51 @@
+{# One task in full: description, facts and its progress notes. #}
+<div class="panel">
+  <div class="panel-head">
+    {{ icon("tasks") }}<span class="panel-title">{{ task.title }}</span>
+    <span class="panel-meta">{{ task.id }}</span>
+  </div>
+  <div class="panel-body">
+    <div class="detail-badges">
+      <span class="badge badge-{{ task.status }}">{{ status_label }}</span>
+      <span class="tag tag-{{ task.priority }}">{{ task.priority|capitalize }} priority</span>
+      {% if task.area %}<span class="tag tag-{{ task.area|lower }}">{{ task.area }}</span>{% endif %}
+      {% if is_late %}<span class="badge badge-blocked">Overdue</span>{% endif %}
+    </div>
+    <div class="detail-desc">
+      {% for block in description_blocks %}
+        {% if block.type == 'list' %}
+      <ul>{% for item in block["items"] %}<li>{{ item }}</li>{% endfor %}</ul>
+        {% else %}
+      <p>{{ block.text }}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="detail-facts">
+      {% for f in facts %}
+      <div class="detail-fact"><span class="fact-label">{{ f.label }}</span><span class="fact-value">{{ f.value }}</span></div>
+      {% endfor %}
+    </div>
+    {% if updates %}
+    <div class="detail-log">
+      <p class="detail-log-title">Progress notes</p>
+      <div class="feed">
+        {% for u in updates %}
+        <div class="feed-item">
+          <span class="avatar">{{ u.initials }}</span>
+          <div class="feed-body">
+            <div class="feed-meta">
+              <span class="feed-who">{{ u.author_name }}</span>
+              <span class="feed-when">{{ u.when }}</span>
+              {% if u.source == 'chat' %}<span class="tag tag-pm">via chat</span>{% endif %}
+            </div>
+            <p class="feed-text">{{ u.note }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <p class="hint-note">No progress notes on this task yet.</p>
+    {% endif %}
+  </div>
+</div>

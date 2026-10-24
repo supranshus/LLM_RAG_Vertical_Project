@@ -8,14 +8,45 @@ Workflow for each HTML page you receive:
 """
 from __future__ import annotations
 
+import re
 from typing import Any
 
 import streamlit as st
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from markupsafe import Markup, escape
 
 from config.settings import get_settings
 
 from .icons import image, svg
+
+_BOLD = re.compile(r"\*\*(.+?)\*\*")
+
+
+def rich(text: str) -> Markup:
+    """Escape a line of text, then turn ``**bold**`` into ``<strong>``.
+
+    Escaping first means the markup can only ever come from the asterisks, not
+    from the text itself. Used for assistant replies.
+    """
+    return Markup(_BOLD.sub(r"<strong>\1</strong>", str(escape(text))))
+
+
+def text_blocks(text: str) -> list[dict[str, Any]]:
+    """Split plain text into paragraphs and bullet lists.
+
+    Lines starting with "- " or "* " become one list; everything else is a
+    paragraph. Used for task descriptions and assistant replies, both of which
+    arrive as plain text with simple bullets.
+    """
+    blocks: list[dict[str, Any]] = []
+    for line in [ln.strip() for ln in (text or "").split("\n") if ln.strip()]:
+        if line.startswith(("- ", "* ")):
+            if not blocks or blocks[-1]["type"] != "list":
+                blocks.append({"type": "list", "items": []})
+            blocks[-1]["items"].append(line[2:].strip())
+        else:
+            blocks.append({"type": "paragraph", "text": line})
+    return blocks
 
 
 @st.cache_resource
@@ -28,6 +59,7 @@ def _env() -> Environment:
     )
     env.globals["icon"] = svg
     env.globals["image"] = image
+    env.filters["rich"] = rich
     return env
 
 

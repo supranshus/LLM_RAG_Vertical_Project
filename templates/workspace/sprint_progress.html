@@ -1,0 +1,23 @@
+{# Sprint-by-sprint completion for one project. #}
+<div class="panel">
+  <div class="panel-head">{{ icon("calendar-sm") }}<span class="panel-title">Sprint progress</span>
+    <span class="panel-meta">{{ sprints|length }} sprints</span>
+  </div>
+  <div class="panel-body">
+    {% for s in sprints %}
+    <div class="sprint-line{{ ' is-current' if s.status == 'active' else '' }}">
+      <div class="sprint-line-head">
+        <span class="sprint-line-num">{{ "%02d"|format(s.sprint_number) }}</span>
+        <span class="sprint-line-name">{{ s.name }}</span>
+        <span class="badge badge-{{ s.badge }}">{{ s.status_label }}</span>
+        <span class="sprint-line-dates">{{ s.dates }}</span>
+      </div>
+      <div class="bar-row">
+        <span>{{ s.done_count }} of {{ s.task_count }} tasks{% if s.open_count %} · {{ s.open_count }} open{% endif %}</span>
+        <span class="bar-value">{{ s.percent }}%</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill {{ s.bar_class }}" style="width: {{ s.percent }}%"></div></div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

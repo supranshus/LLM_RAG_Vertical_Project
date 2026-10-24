@@ -1,0 +1,56 @@
+[
+  {
+    "id": "dlv-01",
+    "project_id": "prj-fleet",
+    "generation_job_id": "job-001",
+    "title": "Live vehicle map",
+    "description": "Dispatch sees every active vehicle on one map, updating live.",
+    "priority": 1,
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "dlv-02",
+    "project_id": "prj-fleet",
+    "generation_job_id": "job-001",
+    "title": "Geofence alerts",
+    "description": "Admins define zones; breaches raise an automatic alert.",
+    "priority": 1,
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "dlv-03",
+    "project_id": "prj-fleet",
+    "generation_job_id": "job-001",
+    "title": "Driver scorecards",
+    "description": "Per-driver performance from trip data, visible to ops.",
+    "priority": 2,
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "dlv-04",
+    "project_id": "prj-fleet",
+    "generation_job_id": "job-001",
+    "title": "Rollout & hardening",
+    "description": "Production readiness: load, security and handover.",
+    "priority": 3,
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "dlv-05",
+    "project_id": "prj-warehouse",
+    "generation_job_id": "job-002",
+    "title": "Barcode stock count",
+    "description": "Handheld stock counting with offline queueing.",
+    "priority": 1,
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "dlv-06",
+    "project_id": "prj-warehouse",
+    "generation_job_id": "job-002",
+    "title": "Putaway flow",
+    "description": "Guided putaway with bin suggestions.",
+    "priority": 2,
+    "created_at": "2026-09-01T09:00:00"
+  }
+]

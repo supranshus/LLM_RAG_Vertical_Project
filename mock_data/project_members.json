@@ -1,0 +1,156 @@
+[
+  {
+    "id": "pmb-001",
+    "project_id": "prj-fleet",
+    "user_id": "usr-sana",
+    "role": "scrum_master",
+    "allocation_percentage": 40,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-002",
+    "project_id": "prj-fleet",
+    "user_id": "usr-rohit",
+    "role": "lead",
+    "allocation_percentage": 80,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-003",
+    "project_id": "prj-fleet",
+    "user_id": "usr-ananya",
+    "role": "developer",
+    "allocation_percentage": 100,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-004",
+    "project_id": "prj-fleet",
+    "user_id": "usr-vikram",
+    "role": "developer",
+    "allocation_percentage": 100,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-005",
+    "project_id": "prj-fleet",
+    "user_id": "usr-priya",
+    "role": "developer",
+    "allocation_percentage": 80,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-006",
+    "project_id": "prj-fleet",
+    "user_id": "usr-karan",
+    "role": "qa",
+    "allocation_percentage": 100,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-007",
+    "project_id": "prj-fleet",
+    "user_id": "usr-arjun",
+    "role": "qa",
+    "allocation_percentage": 60,
+    "is_buffer": true,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-008",
+    "project_id": "prj-fleet",
+    "user_id": "usr-meera",
+    "role": "developer",
+    "allocation_percentage": 50,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-009",
+    "project_id": "prj-warehouse",
+    "user_id": "usr-sana",
+    "role": "scrum_master",
+    "allocation_percentage": 30,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-010",
+    "project_id": "prj-warehouse",
+    "user_id": "usr-priya",
+    "role": "developer",
+    "allocation_percentage": 20,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-011",
+    "project_id": "prj-warehouse",
+    "user_id": "usr-vikram",
+    "role": "lead",
+    "allocation_percentage": 40,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-012",
+    "project_id": "prj-warehouse",
+    "user_id": "usr-karan",
+    "role": "qa",
+    "allocation_percentage": 40,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-013",
+    "project_id": "prj-billing",
+    "user_id": "usr-rohit",
+    "role": "lead",
+    "allocation_percentage": 0,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "pmb-014",
+    "project_id": "prj-billing",
+    "user_id": "usr-vikram",
+    "role": "developer",
+    "allocation_percentage": 0,
+    "is_buffer": false,
+    "is_active": true,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  }
+]

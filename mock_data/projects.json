@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "id": "prj-fleet",
+    "name": "Fleet monitoring portal",
+    "type": "web_app",
+    "description": "Real-time visibility into vehicle location, geofence compliance and driver performance for dispatch and operations teams.",
+    "start_date": "2026-09-14",
+    "preferred_end_date": "2026-11-06",
+    "status": "active",
+    "created_by": "usr-sana",
+    "created_at": "2026-09-01T10:00:00",
+    "updated_at": "2026-10-23T18:20:00"
+  },
+  {
+    "id": "prj-warehouse",
+    "name": "Warehouse inventory app",
+    "type": "mobile_app",
+    "description": "Barcode-driven stock counts and putaway for warehouse staff on handheld devices.",
+    "start_date": "2026-09-28",
+    "preferred_end_date": "2026-12-04",
+    "status": "active",
+    "created_by": "usr-sana",
+    "created_at": "2026-09-20T11:30:00",
+    "updated_at": "2026-10-22T16:05:00"
+  },
+  {
+    "id": "prj-billing",
+    "name": "Billing API v2",
+    "type": "api",
+    "description": "Replacement billing service with usage metering and invoice generation.",
+    "start_date": "2026-06-01",
+    "preferred_end_date": "2026-09-05",
+    "status": "completed",
+    "created_by": "usr-deepak",
+    "created_at": "2026-05-20T09:10:00",
+    "updated_at": "2026-09-05T17:00:00"
+  },
+  {
+    "id": "prj-support",
+    "name": "Customer support portal",
+    "type": "web_app",
+    "description": "Self-service ticket portal with knowledge base search for end customers.",
+    "start_date": "2026-11-02",
+    "preferred_end_date": "2027-01-29",
+    "status": "draft",
+    "created_by": "usr-sana",
+    "created_at": "2026-10-18T14:45:00",
+    "updated_at": "2026-10-18T14:45:00"
+  }
+]

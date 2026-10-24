@@ -10,9 +10,11 @@ import streamlit as st
 
 # File uploaders and buttons can't be assigned through session_state.
 _NOT_ASSIGNABLE = {"cp_brd", "cp_employee_excel"}
+# cp_: the create-project form. app_: the shell (signed-in user, current project).
+_PREFIXES = ("cp_", "app_")
 
 
-def persist_form_state(prefix: str = "cp_") -> None:
+def persist_form_state(prefixes: tuple[str, ...] = _PREFIXES) -> None:
     for key in list(st.session_state.keys()):
-        if isinstance(key, str) and key.startswith(prefix) and key not in _NOT_ASSIGNABLE:
+        if isinstance(key, str) and key.startswith(prefixes) and key not in _NOT_ASSIGNABLE:
             st.session_state[key] = st.session_state[key]

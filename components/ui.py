@@ -19,7 +19,13 @@ def load_css(*files: str) -> None:
 
 
 def inject_css(css: str) -> None:
-    st.html(f"<style>{css}</style>")
+    """Add a stylesheet to the page.
+
+    ``<`` is escaped to its CSS form. A literal ``<`` anywhere in the text —
+    even inside a comment — makes the sanitiser behind ``st.html`` treat the
+    rest as markup, and the whole stylesheet is dropped with no error.
+    """
+    st.html(f"<style>{css.replace('<', '\\3C ')}</style>")
 
 
 def icon_rule(

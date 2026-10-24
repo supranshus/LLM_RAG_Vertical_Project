@@ -1,0 +1,10 @@
+{# A row of headline numbers. Each metric: label, value, optional note and tone. #}
+<div class="metric-grid{{ ' is-three' if metrics|length == 3 else '' }}">
+  {% for m in metrics %}
+  <div class="metric {{ m.tone | default('') }}">
+    <p class="metric-label">{{ m.label }}</p>
+    <p class="metric-value">{{ m.value }}</p>
+    {% if m.note %}<p class="metric-note">{{ m.note }}</p>{% endif %}
+  </div>
+  {% endfor %}
+</div>

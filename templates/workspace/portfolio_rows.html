@@ -1,0 +1,16 @@
+{# Every project a director or manager can see, one row each. #}
+<div class="task-list">
+  {% for p in projects %}
+  <div class="task-row{{ ' is-late' if p.health == 'behind' else '' }}">
+    <span class="task-name">{{ p.name }}
+      <span class="task-sub">{{ p.health_label }} · {{ p.dates }}</span>
+    </span>
+    <span class="badge badge-{{ p.status_badge }}">{{ p.status_label }}</span>
+    <span class="portfolio-progress">
+      <span class="bar-track"><span class="bar-fill {{ p.bar_class }}" style="width: {{ p.percent }}%"></span></span>
+      <span class="portfolio-percent">{{ p.percent_label }}</span>
+    </span>
+    <span class="task-due{{ ' is-late' if p.risk_count else '' }}">{{ p.risk_label }}</span>
+  </div>
+  {% endfor %}
+</div>

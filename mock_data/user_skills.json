@@ -1,0 +1,134 @@
+[
+  {
+    "user_id": "usr-deepak",
+    "skill_id": "skl-01",
+    "proficiency": "expert",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-deepak",
+    "skill_id": "skl-02",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-sana",
+    "skill_id": "skl-03",
+    "proficiency": "expert",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-sana",
+    "skill_id": "skl-04",
+    "proficiency": "expert",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-sana",
+    "skill_id": "skl-02",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-rohit",
+    "skill_id": "skl-05",
+    "proficiency": "expert",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-rohit",
+    "skill_id": "skl-06",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-rohit",
+    "skill_id": "skl-07",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-ananya",
+    "skill_id": "skl-08",
+    "proficiency": "expert",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-ananya",
+    "skill_id": "skl-09",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-ananya",
+    "skill_id": "skl-10",
+    "proficiency": "intermediate",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-vikram",
+    "skill_id": "skl-05",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-vikram",
+    "skill_id": "skl-11",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-vikram",
+    "skill_id": "skl-12",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-priya",
+    "skill_id": "skl-08",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-priya",
+    "skill_id": "skl-09",
+    "proficiency": "intermediate",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-karan",
+    "skill_id": "skl-13",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-karan",
+    "skill_id": "skl-14",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-arjun",
+    "skill_id": "skl-13",
+    "proficiency": "intermediate",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-arjun",
+    "skill_id": "skl-15",
+    "proficiency": "intermediate",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-meera",
+    "skill_id": "skl-16",
+    "proficiency": "expert",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "user_id": "usr-meera",
+    "skill_id": "skl-17",
+    "proficiency": "advanced",
+    "created_at": "2026-09-01T09:00:00"
+  }
+]

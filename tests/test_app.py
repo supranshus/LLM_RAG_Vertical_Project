@@ -9,6 +9,13 @@ from components import html
 from services import DataProviderError, projects
 
 APP = "../app.py"
+CREATE_PROJECT_PAGE = "views/create_project.py"
+
+
+def _create_project_app(timeout: int = 30):
+    """Open the app on Create project. The app itself lands on Projects."""
+    at = AppTest.from_file(APP).run(timeout=timeout)
+    return at.switch_page(CREATE_PROJECT_PAGE).run(timeout=timeout)
 
 
 def _texts(at):
@@ -16,7 +23,7 @@ def _texts(at):
 
 
 def test_create_project_renders():
-    at = AppTest.from_file(APP).run(timeout=30)
+    at = _create_project_app()
     assert not at.exception
     assert "Set up a new project" in _texts(at)
     assert at.text_input(key="cp_name").placeholder == "Fleet monitoring portal"
@@ -24,7 +31,7 @@ def test_create_project_renders():
 
 
 def test_add_employee_to_team_once():
-    at = AppTest.from_file(APP).run(timeout=30)
+    at = _create_project_app()
     employee_label = at.selectbox(key="cp_employee_selection").options[0]
     at.selectbox(key="cp_employee_selection").set_value(employee_label).run(timeout=30)
     at.button(key="add_member").click().run(timeout=30)
@@ -35,7 +42,7 @@ def test_add_employee_to_team_once():
 
 
 def test_generate_requires_name():
-    at = AppTest.from_file(APP).run(timeout=30)
+    at = _create_project_app()
     at.button(key="generate").click().run(timeout=30)
     assert at.error[0].value == "Project name is required."
 
@@ -65,7 +72,7 @@ def test_brd_validation_is_inline_and_clears_on_replacement_or_removal(
         return original_uploader(label, **kwargs)
 
     monkeypatch.setattr(st, "file_uploader", uploader)
-    at = AppTest.from_file(APP).run(timeout=30)
+    at = _create_project_app()
     assert not at.exception
     container = next(block for block in at.get("flex_container") if block.key == "brd_upload")
     assert message in container.error[0].value
@@ -109,7 +116,7 @@ def test_brd_validation_is_inline_and_clears_on_replacement_or_removal(
 
 
 def test_imported_employee_survives_reruns_and_can_be_added():
-    at = AppTest.from_file(APP).run(timeout=30)
+    at = _create_project_app()
     at.session_state["cp_imported_employees"] = {
         "excel-123": {"id": "excel-123", "name": "Alex Rivera", "role": "QA",
                       "experience_years": 3, "skills": ["Testing"]},
@@ -124,7 +131,7 @@ def test_imported_employee_survives_reruns_and_can_be_added():
 
 
 def test_generate_stays_on_generation_screen():
-    at = AppTest.from_file(APP).run(timeout=30)
+    at = _create_project_app()
     at.text_input(key="cp_name").set_value("Warehouse hub")
     at.button(key="generate").click().run(timeout=30)
     assert not at.exception
@@ -165,7 +172,7 @@ def test_generation_screen_renders_before_saving_and_generating(monkeypatch):
     monkeypatch.setattr(html, "render_string", render)
     monkeypatch.setattr(projects, "create_project", create)
     monkeypatch.setattr(projects, "generate_documents", generate)
-    at = AppTest.from_file(APP).run(timeout=30)
+    at = _create_project_app()
     at.text_input(key="cp_name").set_value("Generation screen")
     at.button(key="generate").click().run(timeout=30)
     assert not at.exception
@@ -186,7 +193,7 @@ def test_generation_failure_restores_form_and_allows_retry(monkeypatch, failed_a
         raise DataProviderError("Service unavailable")
 
     monkeypatch.setattr(projects, failed_action, fail)
-    at = AppTest.from_file(APP).run(timeout=30)
+    at = _create_project_app()
     at.text_input(key="cp_name").set_value("Retry project")
     at.button(key="generate").click().run(timeout=30)
     assert not at.exception

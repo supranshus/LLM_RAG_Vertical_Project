@@ -38,6 +38,24 @@ ENDPOINTS: dict[str, Endpoint] = {
     "project_documents": Endpoint(
         path="/projects/{project_id}/documents", mock_file="generated_documents.json"
     ),
+
+    # ---- workspace: execution data behind the dashboard, board, tasks and alerts ----
+    # Collection: people, their skills and their project membership.
+    "users": Endpoint(path="/users", mock_file="users.json"),
+    "skills": Endpoint(path="/skills", mock_file="skills.json"),
+    "user_skills": Endpoint(path="/user-skills", mock_file="user_skills.json", id_field="user_id"),
+    "project_members": Endpoint(path="/project-members", mock_file="project_members.json"),
+    "project_sprint_settings": Endpoint(
+        path="/project-sprint-settings", mock_file="project_sprint_settings.json"
+    ),
+    # Collection: deliverables (candidate epics), sprints and tasks.
+    "deliverables": Endpoint(path="/deliverables", mock_file="project_deliverables.json"),
+    "sprints": Endpoint(path="/sprints", mock_file="sprints.json"),
+    "tasks": Endpoint(path="/tasks", mock_file="tasks.json"),
+    # Collection: progress notes written against a task (see README "Schema gaps").
+    "task_updates": Endpoint(path="/task-updates", mock_file="task_updates.json"),
+    # Collection: risk alerts and notifications.
+    "notifications": Endpoint(path="/notifications", mock_file="notifications.json"),
 }
 
 

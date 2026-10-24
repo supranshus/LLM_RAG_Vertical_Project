@@ -9,7 +9,7 @@ from __future__ import annotations
 import streamlit as st
 
 # File uploaders and buttons can't be assigned through session_state.
-_NOT_ASSIGNABLE = {"cp_brd"}
+_NOT_ASSIGNABLE = {"cp_brd", "cp_employee_excel"}
 
 
 def persist_form_state(prefix: str = "cp_") -> None:

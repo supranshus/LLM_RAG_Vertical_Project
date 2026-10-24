@@ -15,6 +15,10 @@ from . import data
 from .base import UploadFile
 
 
+def list_employees() -> list[dict[str, Any]]:
+    return data.list("employees")
+
+
 def upload_brd(project_id: str, brd: UploadFile) -> Any:
     return data.action("project_brd", path_params={"project_id": project_id}, files={"file": brd})
 

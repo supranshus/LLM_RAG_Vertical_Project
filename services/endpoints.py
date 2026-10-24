@@ -26,6 +26,8 @@ class Endpoint:
 ENDPOINTS: dict[str, Endpoint] = {
     # Collection: list/get/create/update/delete projects.
     "projects": Endpoint(path="/projects", mock_file="projects.json"),
+    # Collection: list employees available for project teams.
+    "employees": Endpoint(path="/employees", mock_file="employees.json"),
     # POST multipart with the BRD file.
     "project_brd": Endpoint(path="/projects/{project_id}/brd"),
     # POST: kick off sprint/task/test case generation. Returns the documents.

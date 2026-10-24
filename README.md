@@ -12,6 +12,22 @@ Markdown files.
 
 It runs on mock data for now. Switching to the real backend is a config change.
 
+## Employee Excel Import
+
+The Team section accepts `.xlsx` workbooks and adds imported employees to the
+available employee list. Select an employee and use **Add member** to include
+them in the project. Imports remain available for the current session.
+
+The first worksheet must have a header row with `name`. Optional columns are
+`id`, `role`, `experience_years`, and `skills` (comma-separated). Column names
+are case-insensitive; spaces may replace underscores. Experience must be a
+non-negative number. Files are limited to 5 MB and 5,000 employee rows.
+Invalid rows reject the import without adding any records. Reimporting the
+same employee ID updates its imported record instead of adding a duplicate;
+without an ID, name and role identify the imported employee. Imported IDs are
+separate from API employee IDs. Install `openpyxl` via the project requirements
+to enable workbook parsing.
+
 ## Quick start
 
 ```bash
@@ -54,6 +70,7 @@ view  ->  services.projects  ->  services.data  ->  MockProvider | ApiProvider
 
 | Action                   | Method & path                       | Mock                          |
 |--------------------------|-------------------------------------|-------------------------------|
+| Load available employees | `GET /employees`                    | `mock_data/employees.json`    |
 | Save draft / create      | `POST /projects`                    | in-memory store               |
 | Save again               | `PATCH /projects/{id}`              | in-memory store               |
 | Upload BRD               | `POST /projects/{id}/brd` (multipart, field `file`) | echoes the file name |

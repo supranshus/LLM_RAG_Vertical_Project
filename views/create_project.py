@@ -2,11 +2,13 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from datetime import date
 from typing import Any
 
 import streamlit as st
 
+from components.employees import import_employees
 from components.html import render_string, render_template
 from components.ui import icon_rule, inject_css, load_css
 from services import DataProviderError
@@ -18,11 +20,10 @@ STEPS = [
     {"id": "details", "num": "01", "label": "Project details"},
     {"id": "deliverables", "num": "02", "label": "Deliverables"},
     {"id": "team", "num": "03", "label": "Team"},
-    {"id": "sprints", "num": "04", "label": "Sprint settings"},
+    # {"id": "sprints", "num": "04", "label": "Sprint settings"},
 ]
 PROJECT_TYPES = ["Web app", "Mobile app", "API / backend", "Internal tool"]
 STATUSES = ["Draft", "Active", "On hold"]
-ROLES = ["Frontend dev", "Backend dev", "QA", "Designer", "PM"]
 SPRINT_LENGTHS = {"1 week": 1, "2 weeks": 2, "3 weeks": 3}
 
 
@@ -31,34 +32,31 @@ SPRINT_LENGTHS = {"1 week": 1, "2 weeks": 2, "3 weeks": 3}
 def _init_state() -> None:
     ss = st.session_state
     ss.setdefault("cp_mode", "new")
-    ss.setdefault("cp_member_ids", [0])
-    ss.setdefault("cp_next_member_id", 1)
+    ss.setdefault("cp_team_employee_ids", [])
+    ss.setdefault("cp_employee_selection", None)
+    ss.setdefault("cp_imported_employees", {})
+    ss.setdefault("cp_employee_import_digest", None)
     ss.setdefault("cp_project_id", None)  # set once saved, so later saves update it
-    ss.setdefault("cp_sprint_length", "2 weeks")
+    ##ss.setdefault("cp_sprint_length", "2 weeks")
     ss.setdefault("cp_working_days", 5)
     ss.setdefault("cp_hours_day", 6)
     # Empty by default. Set here rather than via value=None so widget state can be restored.
     ss.setdefault("cp_start_date", None)
     ss.setdefault("cp_end_date", None)
-    for mid in ss.cp_member_ids:
-        ss.setdefault(f"cp_m{mid}_exp", None)
-
-
 def _set_mode(mode: str) -> None:
     st.session_state.cp_mode = mode
 
 
 def _add_member() -> None:
     ss = st.session_state
-    ss.cp_member_ids.append(ss.cp_next_member_id)
-    ss[f"cp_m{ss.cp_next_member_id}_exp"] = None
-    ss.cp_next_member_id += 1
+    employee_id = ss.get("cp_employee_selection")
+    if employee_id in ss.cp_employee_directory and employee_id not in ss.cp_team_employee_ids:
+        ss.cp_team_employee_ids.append(employee_id)
+    ss.cp_employee_selection = None
 
 
-def _remove_member(member_id: int) -> None:
-    ids = st.session_state.cp_member_ids
-    if len(ids) > 1:
-        ids.remove(member_id)
+def _remove_member(employee_id: str) -> None:
+    st.session_state.cp_team_employee_ids.remove(employee_id)
 
 
 # ---- payload ----------------------------------------------------------------
@@ -72,15 +70,21 @@ def build_payload() -> dict[str, Any]:
     ss = st.session_state
     existing = ss.cp_mode == "existing"
     team = []
-    for mid in ss.cp_member_ids:
-        name = (ss.get(f"cp_m{mid}_name") or "").strip()
+    for employee_id in ss.cp_team_employee_ids:
+        employee = ss.cp_employee_directory.get(employee_id)
+        if not employee:
+            continue
+        name = str(employee.get("name") or "").strip()
         if not name:
             continue
+        skills = employee.get("skills") or []
+        if isinstance(skills, str):
+            skills = skills.split(",")
         team.append({
             "name": name,
-            "experience_years": ss.get(f"cp_m{mid}_exp"),
-            "role": ss.get(f"cp_m{mid}_role"),
-            "skills": [s.strip() for s in (ss.get(f"cp_m{mid}_skills") or "").split(",") if s.strip()],
+            "experience_years": employee.get("experience_years"),
+            "role": employee.get("role"),
+            "skills": [str(skill).strip() for skill in skills if str(skill).strip()],
         })
     return {
         "mode": ss.cp_mode,
@@ -93,11 +97,11 @@ def build_payload() -> dict[str, Any]:
         "status": ss.get("cp_status"),
         "deliverables": [l.strip() for l in (ss.get("cp_deliverables") or "").splitlines() if l.strip()],
         "team": team,
-        "sprint_settings": {
-            "length_weeks": SPRINT_LENGTHS[ss.cp_sprint_length],
-            "working_days_per_week": ss.cp_working_days,
-            "hours_per_day": ss.cp_hours_day,
-        },
+        # "sprint_settings": {
+        #     "length_weeks": SPRINT_LENGTHS[ss.cp_sprint_length],
+        #     "working_days_per_week": ss.cp_working_days,
+        #     "hours_per_day": ss.cp_hours_day,
+        # },
     }
 
 
@@ -125,6 +129,19 @@ def _save(payload: dict[str, Any]) -> str:
 # ---- page -------------------------------------------------------------------
 
 _init_state()
+try:
+    employee_records = projects.list_employees()
+    employee_load_error = None
+except DataProviderError as exc:
+    employee_records = []
+    employee_load_error = str(exc)
+employee_directory = {
+    str(employee["id"]): employee
+    for employee in employee_records
+    if employee.get("id") is not None
+}
+employee_directory.update(st.session_state.cp_imported_employees)
+st.session_state.cp_employee_directory = employee_directory
 load_css("theme.css", "create_project.css")
 
 mode = st.session_state.cp_mode
@@ -148,12 +165,15 @@ inject_css(
 )
 
 with st.container(key="layout"):
-    rail_col, main_col = st.columns([250, 700])
-
-with rail_col, st.container(key="rail"):
-    render_template("create_project/rail.html", steps=STEPS)
+    with st.container(key="rail"):
+        render_template("create_project/rail.html", steps=STEPS)
+    main_col = st.container()
 
 with main_col, st.container(key="main"):
+    content_scroll = st.container(key="content_scroll")
+    action_footer = st.container(key="action_footer")
+
+with content_scroll:
     # Header
     with st.container(key="page_head"):
         render_template(
@@ -162,9 +182,9 @@ with main_col, st.container(key="main"):
             subtitle="These details feed the generator that plans your sprints, "
             "breaks down tasks, and drafts test cases.",
         )
-        with st.container(key="mode_toggle", horizontal=True, gap=None):
-            st.button("New project", key="mode_new", on_click=_set_mode, args=("new",))
-            st.button("Existing project", key="mode_existing", on_click=_set_mode, args=("existing",))
+        # with st.container(key="mode_toggle", horizontal=True, gap=None):
+        #     st.button("New project", key="mode_new", on_click=_set_mode, args=("new",))
+        #     st.button("Existing project", key="mode_existing", on_click=_set_mode, args=("existing",))
 
     # 01 Project details
     with st.container(key="block_details"):
@@ -197,33 +217,85 @@ with main_col, st.container(key="main"):
         with st.container(key="team_head", horizontal=True):
             st.html(render_string("create_project/block_head.html", id="team", num="03",
                                   title="Team members"))
-            st.button("Add member", key="add_member", on_click=_add_member)
         st.html('<p class="block-note">Who\'s building it, and what they bring.</p>')
+        employee_excel = st.file_uploader("Import employees from Excel", type=["xlsx"],
+                                          key="cp_employee_excel")
+        inject_css(
+            '.st-key-cp_employee_excel [data-testid="stFileUploaderDropzone"]::after { content: '
+            + json.dumps(employee_excel.name if employee_excel else "Upload employee workbook").replace("<", "\\3C ")
+            + "; }"
+        )
+        if employee_excel is None:
+            st.session_state.cp_employee_import_digest = None
+        else:
+            content = employee_excel.getvalue()
+            digest = hashlib.sha256(content).hexdigest()
+            if digest != st.session_state.cp_employee_import_digest:
+                try:
+                    imported = import_employees(content)
+                except ValueError as exc:
+                    st.error(str(exc))
+                else:
+                    st.session_state.cp_imported_employees.update(imported)
+                    employee_directory.update(imported)
+                    st.session_state.cp_employee_directory = employee_directory
+                    st.session_state.cp_employee_import_digest = digest
+                    st.success(f"Imported {len(imported)} employees.")
+        if employee_load_error:
+            st.warning(f"Could not load employees: {employee_load_error}")
+        elif not employee_directory:
+            st.caption("No employees are available to add.")
+        available_employee_ids = [
+            employee_id for employee_id in employee_directory
+            if employee_id not in st.session_state.cp_team_employee_ids
+        ]
+        with st.container(key="team_picker", horizontal=True):
+            selected_employee_id = st.selectbox(
+                "Available employees",
+                available_employee_ids,
+                format_func=lambda employee_id: (
+                    f"{employee_directory[employee_id].get('name', 'Employee')} · "
+                    f"{employee_directory[employee_id].get('role') or 'Role not set'}"
+                ),
+                key="cp_employee_selection",
+                index=None,
+                placeholder="Select an employee",
+                disabled=not available_employee_ids,
+            )
+            st.button("Add member", key="add_member", on_click=_add_member,
+                      disabled=selected_employee_id is None)
         with st.container(key="members"):
-            for mid in st.session_state.cp_member_ids:
-                with st.container(key=f"member_row_{mid}"):
-                    name, exp, role, skills, remove = st.columns([1.3, 0.7, 1, 1.2, 0.34])
-                    name.text_input("Name", key=f"cp_m{mid}_name", placeholder="Name",
-                                    label_visibility="collapsed")
-                    exp.number_input("Years of experience", key=f"cp_m{mid}_exp",
-                                     min_value=0, step=1, placeholder="Yrs exp",
-                                     label_visibility="collapsed")
-                    role.selectbox("Role", ROLES, key=f"cp_m{mid}_role", label_visibility="collapsed")
-                    skills.text_input("Skills", key=f"cp_m{mid}_skills",
-                                      placeholder="Skills, comma separated",
-                                      label_visibility="collapsed")
-                    remove.button("Remove member", key=f"member_remove_{mid}",
-                                  on_click=_remove_member, args=(mid,))
+            if not st.session_state.cp_team_employee_ids:
+                st.caption("No team members added yet.")
+            for index, employee_id in enumerate(st.session_state.cp_team_employee_ids):
+                employee = employee_directory.get(employee_id)
+                if not employee:
+                    continue
+                with st.container(key=f"member_row_{index}"):
+                    details, remove = st.columns([1, 0.12])
+                    details.markdown(f"**{employee.get('name', 'Employee')}**")
+                    skills = employee.get("skills") or []
+                    if isinstance(skills, str):
+                        skills = [skill.strip() for skill in skills.split(",") if skill.strip()]
+                    summary = [employee.get("role") or "Role not set"]
+                    if employee.get("experience_years") is not None:
+                        summary.append(f"{employee['experience_years']} years")
+                    if skills:
+                        summary.append(", ".join(skills))
+                    details.caption(" · ".join(summary))
+                    remove.button("Remove member", key=f"member_remove_{index}",
+                                  on_click=_remove_member, args=(employee_id,))
 
     # 04 Sprint settings
-    with st.container(key="block_sprints"):
-        render_template("create_project/block_head.html", id="sprints", num="04",
-                        title="Sprint settings", note="How work gets paced once a sprint starts.")
-        c1, c2, c3 = st.columns(3)
-        c1.selectbox("Sprint length", list(SPRINT_LENGTHS), key="cp_sprint_length")
-        c2.number_input("Working days / week", key="cp_working_days", min_value=1, max_value=7, step=1)
-        c3.number_input("Hours / day per person", key="cp_hours_day", min_value=1, max_value=12, step=1)
+    # with st.container(key="block_sprints"):
+    #     render_template("create_project/block_head.html", id="sprints", num="04",
+    #                     title="Sprint settings", note="How work gets paced once a sprint starts.")
+    #     c1, c2, c3 = st.columns(3)
+    #     c1.selectbox("Sprint length", list(SPRINT_LENGTHS), key="cp_sprint_length")
+    #     c2.number_input("Working days / week", key="cp_working_days", min_value=1, max_value=7, step=1)
+    #     c3.number_input("Hours / day per person", key="cp_hours_day", min_value=1, max_value=12, step=1)
 
+with action_footer:
     # Actions
     with st.container(key="actions", horizontal=True):
         save_clicked = st.button("Save as draft", key="save_draft")

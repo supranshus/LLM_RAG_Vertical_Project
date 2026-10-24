@@ -23,6 +23,12 @@ def test_mock_project_crud(mock):
         mock.get("projects", created["id"])
 
 
+def test_mock_employee_directory(mock):
+    employees = mock.list("employees")
+    assert employees
+    assert {"id", "name", "role", "experience_years", "skills"} <= employees[0].keys()
+
+
 def test_mock_documents_and_actions(mock):
     docs = mock.fetch("project_documents", path_params={"project_id": "x"})
     assert {"problem_statement", "sprints", "tasks", "test_cases"} <= docs.keys()

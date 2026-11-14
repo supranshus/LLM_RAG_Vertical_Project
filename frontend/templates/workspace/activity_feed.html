@@ -1,0 +1,28 @@
+{# Progress notes written against tasks, newest first. #}
+<div class="panel">
+  <div class="panel-head">{{ icon("clock") }}<span class="panel-title">{{ title }}</span>
+    <span class="panel-meta">{{ updates|length }} updates</span>
+  </div>
+  <div class="panel-body">
+    {% if updates %}
+    <div class="feed">
+      {% for u in updates %}
+      <div class="feed-item">
+        <span class="avatar">{{ u.initials }}</span>
+        <div class="feed-body">
+          <div class="feed-meta">
+            <span class="feed-who">{{ u.author_name }}</span>
+            <span class="feed-when">{{ u.when }}</span>
+            {% if u.source == 'chat' %}<span class="tag tag-pm">via chat</span>{% endif %}
+          </div>
+          <p class="feed-text">{{ u.note }}</p>
+          {% if u.task_title %}<span class="feed-task">{{ u.task_title }}{% if u.status_label %} · now {{ u.status_label }}{% endif %}</span>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="risk-clear">No progress updates yet. They appear here as the team reports in.</p>
+    {% endif %}
+  </div>
+</div>

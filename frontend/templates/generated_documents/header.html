@@ -1,0 +1,5 @@
+<h1 class="viewer-title">{{ project_name }}</h1>
+<div class="status-line"><span class="status-dot"></span>{{ status_text }}</div>
+<div class="stat-chips">
+  {% for chip in chips %}<span class="stat-chip">{{ chip }}</span>{% endfor %}
+</div>

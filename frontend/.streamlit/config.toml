@@ -1,0 +1,23 @@
+[server]
+headless = true
+maxUploadSize = 50
+
+[client]
+toolbarMode = "minimal"
+
+# Colors and fonts from the provided HTML designs (see assets/css/theme.css).
+[theme]
+base = "light"
+primaryColor = "#1F6F58"
+backgroundColor = "#F1F4F0"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#11201C"
+linkColor = "#175245"
+borderColor = "#DCE4DD"
+showWidgetBorder = true
+baseRadius = "8px"
+buttonRadius = "999px"
+baseFontSize = 15
+font = "IBM Plex Sans:https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+headingFont = "Space Grotesk:https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap"
+codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap"

@@ -1,0 +1,84 @@
+{# One generated document: toolbar + body. `kind` selects the body layout. #}
+{% macro section_blocks(sections) %}
+  {% for section in sections %}
+  <h3>{{ section.heading }}</h3>
+    {% for block in section.blocks %}
+      {% if block.type == "paragraph" %}
+  <p>{{ block.text }}</p>
+      {% elif block.type == "list" %}
+  <ul>
+        {% for item in block["items"] %}
+    <li>{% if item is mapping %}<strong>{{ item.term }}</strong> — {{ item.text }}{% else %}{{ item }}{% endif %}</li>
+        {% endfor %}
+  </ul>
+      {% elif block.type == "scope" %}
+  <div class="scope-grid">
+    <div>
+      <h4>In scope</h4>
+      <ul>{% for item in block.in_scope %}<li>{{ item }}</li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h4>Out of scope (this phase)</h4>
+      <ul>{% for item in block.out_of_scope %}<li>{{ item }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endmacro %}
+
+<div class="doc-card">
+  <div class="doc-toolbar">
+    {{ icon(toolbar_icon) }}
+    <span class="doc-filename">{{ filename }}</span>
+    <span class="doc-meta">{{ meta }}</span>
+  </div>
+  <div class="doc-body">
+{% if kind == "sections" %}
+    {{ section_blocks(doc.sections) }}
+
+{% elif kind == "sprints" %}
+    <div class="sprint-track">
+      {% for sprint in sprints %}
+      <div class="sprint-item">
+        <div class="sprint-num">{{ "%02d"|format(sprint.number) }}</div>
+        <div class="sprint-content">
+          <h4>{{ sprint.name }}</h4>
+          <div class="sprint-dates">{{ sprint.dates }}</div>
+          <p class="sprint-goal">{{ sprint.goal }}</p>
+          <div class="sprint-meta-row">
+            <div class="avatar-stack">
+              {% for m in sprint.members %}<span class="avatar" title="{{ m }}">{{ initials(m) }}</span>{% endfor %}
+            </div>
+            <span class="capacity-text">{{ sprint.members|length }} members · ~{{ sprint.capacity_hours }} hrs capacity</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+{% elif kind == "tasks" %}
+    {% for group in task_groups %}
+    <div class="task-group">
+      <div class="task-group-title">Sprint {{ group.sprint.number }} — {{ group.sprint.name }} <span class="count">{{ group.tasks|length }} tasks</span></div>
+      <div class="task-list">
+        {% for t in group.tasks %}
+        <div class="task-row"><span class="task-name">{{ t.title }}</span><span class="tag tag-{{ t.area|lower }}">{{ t.area }}</span><span class="task-assignee"><span class="avatar">{{ initials(t.assignee) }}</span><span>{{ t.assignee }}</span></span><span class="tag tag-{{ t.priority|lower }}">{{ t.priority }}</span><span class="task-est">{{ t.estimate_hours }}h</span></div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+{% elif kind == "tests" %}
+    {% for tc in test_cases %}
+    <div class="tc-card">
+      <div class="tc-head"><span class="tc-id">{{ tc.id }}</span><span class="tc-title">{{ tc.title }}</span><span class="tag tc-priority-{{ tc.priority|lower }}">{{ tc.priority }}</span></div>
+      <div class="tc-meta">Feature: {{ tc.feature }}</div>
+      <div class="tc-section"><div class="label">Precondition</div><p>{{ tc.precondition }}</p></div>
+      <div class="tc-section"><div class="label">Steps</div><ol>{% for step in tc.steps %}<li>{{ step }}</li>{% endfor %}</ol></div>
+      <div class="tc-section"><div class="label">Expected result</div><p>{{ tc.expected_result }}</p></div>
+    </div>
+    {% endfor %}
+{% endif %}
+  </div>
+</div>

@@ -1,0 +1,23 @@
+{# Deterministic risk flags: what the detector found, and why. #}
+<div class="panel">
+  <div class="panel-head">{{ icon("alert") }}<span class="panel-title">{{ title }}</span>
+    <span class="panel-meta">{{ flags|length }} flagged</span>
+  </div>
+  <div class="panel-body">
+    {% if flags %}
+    {% for f in flags %}
+    <div class="risk-item">
+      <span class="badge badge-{{ f.severity }}">{{ f.severity|capitalize }}</span>
+      <div class="risk-body">
+        <p class="risk-title">{{ f.title }}</p>
+        <p class="risk-reason">{{ f.reason }}</p>
+      </div>
+    </div>
+    {% endfor %}
+    <p class="hint-note">{{ note }}</p>
+    {% else %}
+    <p class="risk-clear">Nothing is flagged right now. No task is blocked or past its due date,
+      and the project is keeping pace with its schedule.</p>
+    {% endif %}
+  </div>
+</div>

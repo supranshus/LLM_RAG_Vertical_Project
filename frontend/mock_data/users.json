@@ -1,0 +1,92 @@
+[
+  {
+    "id": "usr-deepak",
+    "name": "Deepak Verma",
+    "email": "deepak.verma@example.com",
+    "role": "admin",
+    "designation": "Delivery Director",
+    "years_of_experience": 14.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "usr-sana",
+    "name": "Sana Iqbal",
+    "email": "sana.iqbal@example.com",
+    "role": "pm",
+    "designation": "Product Manager",
+    "years_of_experience": 10.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "usr-rohit",
+    "name": "Rohit Mehta",
+    "email": "rohit.mehta@example.com",
+    "role": "tech_lead",
+    "designation": "Backend Tech Lead",
+    "years_of_experience": 9.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "usr-ananya",
+    "name": "Ananya Rao",
+    "email": "ananya.rao@example.com",
+    "role": "member",
+    "designation": "Senior Frontend Engineer",
+    "years_of_experience": 6.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "usr-vikram",
+    "name": "Vikram Joshi",
+    "email": "vikram.joshi@example.com",
+    "role": "member",
+    "designation": "Backend Engineer",
+    "years_of_experience": 5.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "usr-priya",
+    "name": "Priya Nair",
+    "email": "priya.nair@example.com",
+    "role": "member",
+    "designation": "Frontend Engineer",
+    "years_of_experience": 4.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "usr-karan",
+    "name": "Karan Shah",
+    "email": "karan.shah@example.com",
+    "role": "member",
+    "designation": "QA Engineer",
+    "years_of_experience": 5.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "usr-arjun",
+    "name": "Arjun Desai",
+    "email": "arjun.desai@example.com",
+    "role": "member",
+    "designation": "QA Engineer",
+    "years_of_experience": 3.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "usr-meera",
+    "name": "Meera Pillai",
+    "email": "meera.pillai@example.com",
+    "role": "member",
+    "designation": "Product Designer",
+    "years_of_experience": 7.0,
+    "created_at": "2026-09-01T09:00:00",
+    "updated_at": "2026-09-01T09:00:00"
+  }
+]

@@ -1,0 +1,32 @@
+{# Kanban columns, one per task status. Scrolls sideways when space runs out;
+   the wrapper draws a fade on the right edge so that is obvious. #}
+<div class="board-scroll">
+<div class="board">
+  {% for col in columns %}
+  <div class="board-col">
+    <div class="board-col-head">
+      <span class="badge badge-{{ col.status }}">{{ col.label }}</span>
+      <span class="board-count">{{ col.tasks|length }}</span>
+    </div>
+    <div class="board-col-body">
+      {% for t in col.tasks %}
+      <div class="board-card{{ ' is-late' if t.is_late else '' }}">
+        <div class="board-card-top">
+          <span class="task-id">{{ t.id }}</span>
+          <span class="tag tag-{{ t.priority }}">{{ t.priority|capitalize }}</span>
+        </div>
+        <p class="board-card-title">{{ t.title }}</p>
+        <div class="board-card-foot">
+          <span class="avatar" title="{{ t.assignee_name or 'Unassigned' }}">{{ t.initials }}</span>
+          {% if t.area %}<span class="tag tag-{{ t.area|lower }}">{{ t.area }}</span>{% endif %}
+          <span class="board-due{{ ' is-late' if t.is_late else '' }}">{{ t.due_label }}</span>
+        </div>
+      </div>
+      {% else %}
+      <div class="board-empty">Nothing here</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>

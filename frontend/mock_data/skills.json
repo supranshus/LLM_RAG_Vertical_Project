@@ -1,0 +1,87 @@
+[
+  {
+    "id": "skl-01",
+    "name": "Portfolio governance",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-02",
+    "name": "Agile",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-03",
+    "name": "Planning",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-04",
+    "name": "Stakeholder management",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-05",
+    "name": "Python",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-06",
+    "name": "PostgreSQL",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-07",
+    "name": "System design",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-08",
+    "name": "React",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-09",
+    "name": "TypeScript",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-10",
+    "name": "Mapping / GIS",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-11",
+    "name": "CI/CD",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-12",
+    "name": "REST APIs",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-13",
+    "name": "Test automation",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-14",
+    "name": "Playwright",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-15",
+    "name": "Accessibility",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-16",
+    "name": "Figma",
+    "created_at": "2026-09-01T09:00:00"
+  },
+  {
+    "id": "skl-17",
+    "name": "Design systems",
+    "created_at": "2026-09-01T09:00:00"
+  }
+]

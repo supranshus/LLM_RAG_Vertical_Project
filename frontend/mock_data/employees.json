@@ -1,0 +1,37 @@
+[
+  {
+    "id": "emp-001",
+    "name": "Neeraj Mishra",
+    "experience_years": 5,
+    "role": "Frontend dev",
+    "skills": ["React", "TypeScript", "Accessibility"]
+  },
+  {
+    "id": "emp-002",
+    "name": "Tanmay Patel",
+    "experience_years": 7,
+    "role": "Backend dev",
+    "skills": ["Python", "PostgreSQL", "REST APIs"]
+  },
+  {
+    "id": "emp-003",
+    "name": "Rishabh Dalal",
+    "experience_years": 4,
+    "role": "QA",
+    "skills": ["Playwright", "Test automation", "CI"]
+  },
+  {
+    "id": "emp-004",
+    "name": "Abhinav Patil",
+    "experience_years": 6,
+    "role": "Designer",
+    "skills": ["Figma", "Design systems", "Research"]
+  },
+  {
+    "id": "emp-005",
+    "name": "Rohit Garcia",
+    "experience_years": 8,
+    "role": "PM",
+    "skills": ["Planning", "Stakeholder management", "Agile"]
+  }
+]

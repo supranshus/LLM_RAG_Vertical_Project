@@ -1,0 +1,22 @@
+{# The conversation so far. Assistant turns carry the intent the router picked. #}
+<div class="chat-log">
+  {% for m in messages %}
+  <div class="chat-turn is-{{ m.role }}">
+    {% if m.role == 'assistant' %}
+    <span class="chat-avatar">{{ icon("sparkle") }}</span>
+    {% endif %}
+    <div class="chat-bubble">
+      {% if m.intent_label and m.role == 'assistant' %}
+      <span class="chat-intent">{{ m.intent_label }}</span>
+      {% endif %}
+      {% for block in m.blocks %}
+        {% if block.type == 'list' %}
+      <ul class="chat-list">{% for item in block["items"] %}<li>{{ item | rich }}</li>{% endfor %}</ul>
+        {% else %}
+      <p class="chat-line">{{ block.text | rich }}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>

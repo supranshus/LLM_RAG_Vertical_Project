@@ -1,0 +1,26 @@
+{# One project in the portfolio list. The "Open" button is rendered by the view. #}
+<div class="proj-head">
+  <div class="proj-identity">
+    <span class="proj-name">{{ project.name }}</span>
+    <span class="proj-type">{{ type_label }}</span>
+  </div>
+  <span class="badge badge-{{ health }}">{{ health_label }}</span>
+</div>
+<p class="proj-desc">{{ project.description }}</p>
+<div class="bar-row">
+  <span>{{ count_label }}</span>
+  <span class="bar-value">{{ percent_label }}</span>
+</div>
+<div class="bar-track"><div class="bar-fill {{ bar_class }}" style="width: {{ percent }}%"></div></div>
+<div class="proj-foot">
+  <div class="avatar-stack">
+    {% for m in members[:6] %}<span class="avatar" title="{{ m.name }}">{{ m.initials }}</span>{% endfor %}
+    {% if members|length > 6 %}<span class="avatar" title="More members">+{{ members|length - 6 }}</span>{% endif %}
+  </div>
+  <span class="proj-dates">{{ dates }}</span>
+  {% if risk_count %}
+  <span class="proj-risks">{{ risk_count }} open risk{{ '' if risk_count == 1 else 's' }}</span>
+  {% else %}
+  <span class="proj-risks is-clear">No open risks</span>
+  {% endif %}
+</div>

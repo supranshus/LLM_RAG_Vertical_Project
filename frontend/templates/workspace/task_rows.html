@@ -1,0 +1,16 @@
+{# A bordered list of tasks. Used on the dashboard and the task detail panel. #}
+<div class="task-list">
+  {% for t in tasks %}
+  <div class="task-row{{ ' is-late' if t.is_late else '' }}">
+    <span class="task-name">{{ t.title }}
+      {% if t.sub %}<span class="task-sub">{{ t.sub }}</span>{% endif %}
+    </span>
+    {% if t.area %}<span class="tag tag-{{ t.area|lower }}">{{ t.area }}</span>{% endif %}
+    <span class="badge badge-{{ t.status }}">{{ t.status_label }}</span>
+    <span class="task-assignee">
+      <span class="avatar">{{ t.initials }}</span><span>{{ t.assignee_name or 'Unassigned' }}</span>
+    </span>
+    <span class="task-due{{ ' is-late' if t.is_late else '' }}">{{ t.due_label }}</span>
+  </div>
+  {% endfor %}
+</div>

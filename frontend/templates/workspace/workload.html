@@ -1,0 +1,22 @@
+{# Open work per person, busiest first. #}
+<div class="panel">
+  <div class="panel-head">{{ icon("users") }}<span class="panel-title">Team workload</span>
+    <span class="panel-meta">{{ rows|length }} people</span>
+  </div>
+  <div class="panel-body is-flush">
+    <div class="task-list">
+      {% for r in rows %}
+      <div class="task-row">
+        <span class="task-assignee" style="width: 170px">
+          <span class="avatar">{{ r.initials }}</span><span>{{ r.name }}</span>
+        </span>
+        <span class="task-name"><span class="task-sub">{{ r.designation or r.role }} · {{ r.allocation_percentage }}% allocated{{ ' · buffer' if r.is_buffer else '' }}</span></span>
+        {% if r.blocked %}<span class="badge badge-blocked">{{ r.blocked }} blocked</span>{% endif %}
+        {% if r.overdue %}<span class="badge badge-high">{{ r.overdue }} overdue</span>{% endif %}
+        <span class="task-due">{{ r.open_tasks }} open</span>
+        <span class="task-due">{{ r.open_hours }}h</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

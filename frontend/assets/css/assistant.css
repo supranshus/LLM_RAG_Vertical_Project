@@ -1,0 +1,54 @@
+/* Assistant (chat) page. */
+
+.chat-intro {
+  background: #fff; border: 1px solid var(--border); border-radius: 16px;
+  padding: 34px 32px; text-align: center; margin-bottom: 16px;
+}
+.chat-intro-mark {
+  width: 42px; height: 42px; border-radius: 50%; background: var(--accent-soft);
+  display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;
+}
+.chat-intro-mark .svg-icon { color: var(--accent); width: 20px; height: 20px; }
+.chat-intro-title { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin: 0 0 6px; color: var(--ink); }
+.chat-intro-text { font-size: 13.5px; color: var(--text-secondary); margin: 0 auto; max-width: 420px; line-height: 1.55; }
+
+.chat-log { display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px; }
+.chat-turn { display: flex; gap: 10px; align-items: flex-start; }
+.chat-turn.is-user { justify-content: flex-end; }
+.chat-avatar {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--accent-soft); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.chat-avatar .svg-icon { color: var(--accent); width: 15px; height: 15px; }
+.chat-bubble {
+  max-width: 78%; border-radius: 16px; padding: 13px 16px;
+  background: #fff; border: 1px solid var(--border);
+}
+.chat-turn.is-user .chat-bubble { background: var(--accent-soft); border-color: #CFE4DA; }
+.chat-intent {
+  display: inline-block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--accent-dark); background: var(--accent-soft);
+  border-radius: 999px; padding: 3px 9px; margin-bottom: 8px;
+}
+.chat-line { font-size: 14px; line-height: 1.55; color: var(--ink); margin: 0 0 6px; }
+.chat-line:last-child { margin-bottom: 0; }
+.chat-bubble strong { font-weight: 600; }
+
+.chat-list { margin: 6px 0 0; padding-left: 20px; }
+.chat-list li { font-size: 13.5px; line-height: 1.55; color: var(--ink); margin-bottom: 4px; }
+.chat-list li:last-child { margin-bottom: 0; }
+
+.st-key-chat_suggestions { gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.st-key-chat_suggestions .stButton button {
+  background: transparent; border: 1px solid var(--border); color: var(--accent-dark);
+  font-size: 13px; font-weight: 500; padding: 7px 16px;
+}
+.st-key-chat_suggestions .stButton button:hover { border-color: var(--accent); background: transparent; }
+
+.st-key-chat_box { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px 20px; }
+.st-key-chat_actions { justify-content: flex-end; margin-top: 12px; }
+.st-key-chat_actions [data-testid="stBaseButton-primary"] { font-size: 13.5px; padding: 10px 20px; }
+
+@media (max-width: 860px) {
+  .chat-bubble { max-width: 90%; }
+}

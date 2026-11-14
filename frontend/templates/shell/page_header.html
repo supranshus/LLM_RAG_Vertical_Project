@@ -1,0 +1,15 @@
+{# Title block at the top of a workspace page. #}
+<div class="page-title-block">
+  <h1 class="viewer-title">{{ title }}</h1>
+  {% if status %}
+  <div class="status-line"><span class="status-dot {{ status_tone }}"></span>{{ status }}</div>
+  {% endif %}
+  {% if subtitle %}
+  <p class="page-subtitle">{{ subtitle }}</p>
+  {% endif %}
+  {% if chips %}
+  <div class="stat-chips">
+    {% for chip in chips %}<span class="stat-chip">{{ chip }}</span>{% endfor %}
+  </div>
+  {% endif %}
+</div>

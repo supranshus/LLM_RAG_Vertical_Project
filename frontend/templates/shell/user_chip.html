@@ -1,0 +1,8 @@
+{# The signed-in person, above the "Viewing as" switcher. #}
+<div class="user-chip">
+  <span class="user-avatar">{{ user.name.split()[:2] | map("first") | join | upper }}</span>
+  <span class="user-text">
+    <span class="user-name">{{ user.name }}</span>
+    <span class="user-role">{{ role_label }}</span>
+  </span>
+</div>

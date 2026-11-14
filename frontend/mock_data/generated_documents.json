@@ -1,0 +1,409 @@
+{
+  "project_id": "demo",
+  "project_name": "Fleet monitoring portal",
+  "status": "complete",
+  "problem_statement": {
+    "word_count": 210,
+    "sections": [
+      {
+        "heading": "Why this project exists",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Dispatch currently tracks vehicle location, driver activity, and delivery status through phone calls, WhatsApp updates, and manually maintained spreadsheets. As the fleet has grown, this no longer scales to real dispatch and safety needs."
+          }
+        ]
+      },
+      {
+        "heading": "Current pain points",
+        "blocks": [
+          {
+            "type": "list",
+            "items": [
+              "Dispatchers have no live view of the fleet and must call drivers to confirm status.",
+              "Vehicles that leave approved routes or restricted zones go unnoticed until a customer or driver reports it.",
+              "Driver performance — on-time delivery, harsh braking, idle time — isn't tracked, so coaching relies on anecdote.",
+              "Incident response is delayed 15–30 minutes on average while dispatch locates the affected vehicle manually."
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "Impact",
+        "blocks": [
+          {
+            "type": "list",
+            "items": [
+              "Missed SLAs on time-sensitive deliveries",
+              "Higher fuel and maintenance cost from unmonitored idling and route deviation",
+              "Limited visibility for safety and compliance reporting",
+              "Dispatcher time spent on manual check-ins instead of exception handling"
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "Opportunity",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "A centralized monitoring portal that surfaces live vehicle position, automated geofence alerts, and driver performance data lets dispatch manage by exception instead of by phone call — and gives the business a defensible record for safety and compliance."
+          }
+        ]
+      }
+    ]
+  },
+  "project_description": {
+    "word_count": 230,
+    "sections": [
+      {
+        "heading": "Overview",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "The Fleet Monitoring Portal is a web application that gives dispatch and operations teams real-time visibility into vehicle location, geofence compliance, and driver performance — replacing manual check-ins with automated tracking and alerts."
+          }
+        ]
+      },
+      {
+        "heading": "Objectives",
+        "blocks": [
+          {
+            "type": "list",
+            "items": [
+              "Give dispatch a live map of the entire active fleet, updated in real time.",
+              "Automatically alert the team when a vehicle enters or leaves a defined zone.",
+              "Score and surface driver performance so coaching is based on data, not anecdote."
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "Scope",
+        "blocks": [
+          {
+            "type": "scope",
+            "in_scope": [
+              "Live vehicle map",
+              "Geofence creation & breach alerts",
+              "Driver scorecards",
+              "Role-based access for dispatch & ops"
+            ],
+            "out_of_scope": [
+              "Route optimization / auto-dispatch",
+              "Native mobile driver app",
+              "Third-party TMS integration"
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "Target users",
+        "blocks": [
+          {
+            "type": "list",
+            "items": [
+              {
+                "term": "Dispatchers",
+                "text": "need the live map and alerts to manage exceptions."
+              },
+              {
+                "term": "Operations managers",
+                "text": "need scorecards and historical reports."
+              },
+              {
+                "term": "Fleet admins",
+                "text": "configure zones, vehicles, and driver profiles."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "heading": "Success metrics",
+        "blocks": [
+          {
+            "type": "list",
+            "items": [
+              "Cut average incident response time from ~20 min to under 5 min.",
+              "100% of active vehicles visible on the map with position updates ≤30s old.",
+              "Zero missed geofence breaches during QA sign-off."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "sprints": [
+    {
+      "number": 1,
+      "name": "Foundation & live map",
+      "start_date": "2026-09-14",
+      "end_date": "2026-09-25",
+      "goal": "Stand up the core map experience so dispatch can see the active fleet in real time.",
+      "members": [
+        "Ananya Rao",
+        "Rohit Mehta",
+        "Karan Shah",
+        "Vikram Joshi"
+      ],
+      "capacity_hours": 200
+    },
+    {
+      "number": 2,
+      "name": "Geofence alerts",
+      "start_date": "2026-09-28",
+      "end_date": "2026-10-09",
+      "goal": "Let fleet admins define zones and get automatic alerts on breach.",
+      "members": [
+        "Priya Nair",
+        "Rohit Mehta",
+        "Vikram Joshi",
+        "Arjun Desai"
+      ],
+      "capacity_hours": 200
+    },
+    {
+      "number": 3,
+      "name": "Driver scorecards & polish",
+      "start_date": "2026-10-12",
+      "end_date": "2026-10-23",
+      "goal": "Surface driver performance data and close out QA before rollout.",
+      "members": [
+        "Ananya Rao",
+        "Vikram Joshi",
+        "Meera Pillai",
+        "Karan Shah",
+        "Sana Iqbal"
+      ],
+      "capacity_hours": 250
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T-01",
+      "sprint": 1,
+      "title": "Set up vehicle location ingestion service",
+      "area": "Backend",
+      "assignee": "Rohit Mehta",
+      "priority": "Must",
+      "estimate_hours": 8
+    },
+    {
+      "id": "T-02",
+      "sprint": 1,
+      "title": "Build live map component with marker clustering",
+      "area": "Frontend",
+      "assignee": "Ananya Rao",
+      "priority": "Must",
+      "estimate_hours": 12
+    },
+    {
+      "id": "T-03",
+      "sprint": 1,
+      "title": "Real-time position updates via WebSocket",
+      "area": "Frontend",
+      "assignee": "Ananya Rao",
+      "priority": "Must",
+      "estimate_hours": 8
+    },
+    {
+      "id": "T-04",
+      "sprint": 1,
+      "title": "CI pipeline stage for map module",
+      "area": "Backend",
+      "assignee": "Vikram Joshi",
+      "priority": "Should",
+      "estimate_hours": 4
+    },
+    {
+      "id": "T-05",
+      "sprint": 1,
+      "title": "QA: map load & live update regression pass",
+      "area": "QA",
+      "assignee": "Karan Shah",
+      "priority": "Must",
+      "estimate_hours": 6
+    },
+    {
+      "id": "T-06",
+      "sprint": 2,
+      "title": "Geofence creation & editing UI",
+      "area": "Frontend",
+      "assignee": "Priya Nair",
+      "priority": "Must",
+      "estimate_hours": 10
+    },
+    {
+      "id": "T-07",
+      "sprint": 2,
+      "title": "Geofence breach detection service",
+      "area": "Backend",
+      "assignee": "Rohit Mehta",
+      "priority": "Must",
+      "estimate_hours": 10
+    },
+    {
+      "id": "T-08",
+      "sprint": 2,
+      "title": "Alert notification pipeline (in-app + email)",
+      "area": "Backend",
+      "assignee": "Vikram Joshi",
+      "priority": "Must",
+      "estimate_hours": 8
+    },
+    {
+      "id": "T-09",
+      "sprint": 2,
+      "title": "Zone management access control",
+      "area": "Backend",
+      "assignee": "Rohit Mehta",
+      "priority": "Should",
+      "estimate_hours": 4
+    },
+    {
+      "id": "T-10",
+      "sprint": 2,
+      "title": "Geofence alert settings screen",
+      "area": "Frontend",
+      "assignee": "Priya Nair",
+      "priority": "Should",
+      "estimate_hours": 6
+    },
+    {
+      "id": "T-11",
+      "sprint": 2,
+      "title": "QA: breach detection & alert timing tests",
+      "area": "QA",
+      "assignee": "Arjun Desai",
+      "priority": "Must",
+      "estimate_hours": 8
+    },
+    {
+      "id": "T-12",
+      "sprint": 3,
+      "title": "Driver scorecard data aggregation job",
+      "area": "Backend",
+      "assignee": "Vikram Joshi",
+      "priority": "Must",
+      "estimate_hours": 10
+    },
+    {
+      "id": "T-13",
+      "sprint": 3,
+      "title": "Scorecard dashboard UI",
+      "area": "Frontend",
+      "assignee": "Ananya Rao",
+      "priority": "Must",
+      "estimate_hours": 10
+    },
+    {
+      "id": "T-14",
+      "sprint": 3,
+      "title": "Scorecard visual design & empty states",
+      "area": "Design",
+      "assignee": "Meera Pillai",
+      "priority": "Should",
+      "estimate_hours": 6
+    },
+    {
+      "id": "T-15",
+      "sprint": 3,
+      "title": "Sprint review & stakeholder demo prep",
+      "area": "PM",
+      "assignee": "Sana Iqbal",
+      "priority": "Should",
+      "estimate_hours": 3
+    },
+    {
+      "id": "T-16",
+      "sprint": 3,
+      "title": "End-to-end scorecard QA",
+      "area": "QA",
+      "assignee": "Karan Shah",
+      "priority": "Must",
+      "estimate_hours": 8
+    },
+    {
+      "id": "T-17",
+      "sprint": 3,
+      "title": "Cross-browser & accessibility pass",
+      "area": "QA",
+      "assignee": "Arjun Desai",
+      "priority": "Could",
+      "estimate_hours": 5
+    }
+  ],
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Live map shows all active vehicles",
+      "priority": "Critical",
+      "feature": "Live vehicle map",
+      "precondition": "Logged in as Dispatcher; at least 1 vehicle is transmitting GPS.",
+      "steps": [
+        "Go to Dashboard → Live Map.",
+        "Wait for the map to finish loading."
+      ],
+      "expected_result": "Map renders within 3 seconds with a marker for every active vehicle at its last known position."
+    },
+    {
+      "id": "TC-02",
+      "title": "Map updates vehicle position in real time",
+      "priority": "High",
+      "feature": "Live vehicle map",
+      "precondition": "Live map open with at least one moving vehicle.",
+      "steps": [
+        "Note a vehicle's current marker position.",
+        "Wait 30 seconds without refreshing the page."
+      ],
+      "expected_result": "The marker moves to the vehicle's updated position without a manual page refresh."
+    },
+    {
+      "id": "TC-03",
+      "title": "Geofence breach triggers an alert",
+      "priority": "Critical",
+      "feature": "Geofence alerts",
+      "precondition": "A geofence zone is configured; a vehicle assigned to it is active.",
+      "steps": [
+        "Move (or simulate) the vehicle outside the defined zone.",
+        "Check the alerts panel."
+      ],
+      "expected_result": "An alert appears within 60 seconds naming the vehicle, the zone, and the breach time."
+    },
+    {
+      "id": "TC-04",
+      "title": "No false alert while inside the zone",
+      "priority": "High",
+      "feature": "Geofence alerts",
+      "precondition": "Vehicle remains within its assigned geofence for the full session.",
+      "steps": [
+        "Monitor the vehicle for 10 minutes inside the zone."
+      ],
+      "expected_result": "No breach alert is generated."
+    },
+    {
+      "id": "TC-05",
+      "title": "Driver scorecard reflects latest trip data",
+      "priority": "High",
+      "feature": "Driver scorecards",
+      "precondition": "Driver has completed at least one trip since the last scorecard refresh.",
+      "steps": [
+        "Open the driver's scorecard.",
+        "Compare trip count and on-time percentage to the raw trip logs."
+      ],
+      "expected_result": "Scorecard numbers match the underlying trip data exactly."
+    },
+    {
+      "id": "TC-06",
+      "title": "Empty state when no vehicles are transmitting",
+      "priority": "Medium",
+      "feature": "Live vehicle map",
+      "precondition": "No vehicles are currently sending GPS data (e.g. a fresh demo account).",
+      "steps": [
+        "Open the Live Map with zero active vehicles."
+      ],
+      "expected_result": "The map shows a clear empty-state message instead of a blank map, with no console errors."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+[project]
+name = "genai-backend"
+version = "0.1.0"
+description = "FastAPI backend for the GenAI boilerplate"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.20.1",
+    "fastapi>=0.162.0",
+    "groq>=1.7.0",
+    "httpx>=0.28.1",
+    "pinecone>=10.2.0",
+    "pydantic-settings>=2.16.1",
+    "pyjwt[crypto]>=2.15.1",
+    "pypdf>=6.21.2",
+    "python-docx>=1.2.0",
+    "python-multipart>=0.0.32",
+    "sqlalchemy>=2.1.6",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient` is deprecated"]
+
+[dependency-groups]
+dev = [
+    "cryptography>=50.0.2",
+    "pytest>=9.1.1",
+    "reportlab>=5.1.0",
+    "ruff>=0.17.2",
+]

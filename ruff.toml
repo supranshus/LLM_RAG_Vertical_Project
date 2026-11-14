@@ -1,0 +1,12 @@
+line-length = 100
+target-version = "py312"
+extend-exclude = ["docs"]
+
+[lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[lint.isort]
+known-first-party = ["app", "tests", "auth", "config", "logging_setup", "services", "views"]
+
+[lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.File", "fastapi.Form", "fastapi.Security"]

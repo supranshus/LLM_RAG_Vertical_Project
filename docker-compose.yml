@@ -1,0 +1,33 @@
+services:
+  backend:
+    build: ./backend
+    env_file: .env
+    environment:
+      DATABASE_URL: sqlite:////app/data/app.db
+      UPLOAD_DIR: /app/data/uploads
+      LOG_DIR: /app/logs
+    ports:
+      - "8000:8000"
+    volumes:
+      - app-data:/app/data
+      - app-logs:/app/logs
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    env_file: .env
+    environment:
+      API_BASE_URL: http://backend:8000
+      LOG_DIR: /app/logs
+    ports:
+      - "8501:8501"
+    volumes:
+      - app-logs:/app/logs
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  app-data:
+  app-logs:

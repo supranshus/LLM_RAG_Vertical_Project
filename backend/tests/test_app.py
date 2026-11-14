@@ -23,6 +23,25 @@ def test_health_ok(client):
     assert r.json() == {"status": "ok", "database": "ok", "vector_store": "ok"}
 
 
+def test_swagger_ui_can_sign_in_with_entra(client):
+    schemes = client.get("/openapi.json").json()["components"]["securitySchemes"]
+    flow = schemes["OAuth2AuthorizationCodeBearer"]["flows"]["authorizationCode"]
+    entra = "https://login.microsoftonline.com/tenant-123/oauth2/v2.0"
+    assert flow["authorizationUrl"] == f"{entra}/authorize"
+    assert flow["tokenUrl"] == f"{entra}/token"
+    assert all(scope.startswith("api://client-456/") for scope in flow["scopes"])
+
+    docs = client.get("/swagger").text
+    assert "client-456" in docs
+    assert "usePkceWithAuthorizationCodeGrant" in docs
+
+
+def test_root_opens_swagger(client):
+    r = client.get("/", follow_redirects=False)
+    assert r.status_code == 307
+    assert r.headers["location"] == "/swagger"
+
+
 def test_request_id_echoed_and_generated(client):
     assert client.get("/health", headers={"X-Request-ID": "abc"}).headers["X-Request-ID"] == "abc"
     assert len(client.get("/health").headers["X-Request-ID"]) == 12

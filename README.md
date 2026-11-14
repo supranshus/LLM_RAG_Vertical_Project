@@ -41,7 +41,7 @@ docker compose up --build
 ```
 
 - App: http://localhost:8501
-- API docs: http://localhost:8000/docs
+- API docs: http://localhost:8000/swagger
 
 ## Run without Docker
 
@@ -107,6 +107,11 @@ registrations → New registration**:
 6. **Token configuration:** add the optional claim `acct` to the **Access** token.
 7. **App roles:** create a role with value `Admin`, then assign it to your admins under
    **Enterprise applications → your app → Users and groups**.
+
+8. **Optional, to sign in from the API docs:** under **Authentication → Add a platform →
+   Single-page application**, add the redirect URI `http://localhost:8000/docs/oauth2-redirect`.
+   Then open http://localhost:8000/swagger, click **Authorize**, and sign in under
+   **OAuth2AuthorizationCodeBearer** (leave the client secret empty).
 
 If sign-in shows **"Need admin approval"**, your organisation doesn't let users consent to apps.
 Ask an Entra admin to go to **API permissions → Add a permission → My APIs**, add

@@ -2,7 +2,9 @@ import logging
 import threading
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
+from fastapi.responses import RedirectResponse
+from fastapi.security import OAuth2AuthorizationCodeBearer
 from sqlalchemy.orm import Session, sessionmaker
 from starlette.concurrency import run_in_threadpool
 
@@ -55,7 +57,29 @@ def create_app(run_startup: bool = True) -> FastAPI:
             ).start()
         yield
 
-    app = FastAPI(title="GenAI Boilerplate API", version="0.1.0", lifespan=lifespan)
+    # Docs only: adds an Entra sign-in to the Authorize dialog in Swagger UI (/swagger).
+    # It never rejects a request; deps.get_current_user still validates every token.
+    entra = f"https://login.microsoftonline.com/{settings.entra_tenant_id}/oauth2/v2.0"
+    scope = f"api://{settings.entra_client_id}/{settings.entra_required_scope}"
+    swagger_sign_in = OAuth2AuthorizationCodeBearer(
+        authorizationUrl=f"{entra}/authorize",
+        tokenUrl=f"{entra}/token",
+        scopes={scope: "Use the API as the signed-in user"},
+        auto_error=False,
+    )
+
+    app = FastAPI(
+        title="AI Powered Project Management Platform",
+        version="0.1.0",
+        lifespan=lifespan,
+        docs_url="/swagger",
+        dependencies=[Depends(swagger_sign_in)],
+        swagger_ui_init_oauth={
+            "clientId": settings.entra_client_id,
+            "scopes": scope,
+            "usePkceWithAuthorizationCodeGrant": True,
+        },
+    )
     register_exception_handlers(app)
     app.add_middleware(RequestContextMiddleware)
     app.include_router(health.router)
@@ -63,6 +87,11 @@ def create_app(run_startup: bool = True) -> FastAPI:
     app.include_router(chat.router)
     app.include_router(documents.router)
     app.include_router(admin.router)
+
+    @app.get("/", include_in_schema=False)
+    def open_swagger() -> RedirectResponse:
+        return RedirectResponse("/swagger")
+
     return app
 
 
